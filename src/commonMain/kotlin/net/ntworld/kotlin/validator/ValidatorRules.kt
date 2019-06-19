@@ -9,64 +9,64 @@ import net.ntworld.kotlin.validator.rule.StringLength
 import kotlin.reflect.KProperty0
 import kotlin.reflect.KProperty1
 
-@ValidatorBuilderDsl
-interface ValidatorBuilder<T> {
+@ValidatorRulesDsl
+interface ValidatorRules<T> {
     // Builder feature ----------------------------------------------------
-    @ValidatorBuilderDsl
-    infix fun extend(validator: Validator<in T>): ValidatorBuilder<T>
+    @ValidatorRulesDsl
+    infix fun extend(validator: Validator<in T>): ValidatorRules<T>
 
-    @ValidatorBuilderDsl
-    infix fun use(validator: Validator<T>): ValidatorBuilder<T> = extend(validator)
+    @ValidatorRulesDsl
+    infix fun use(validator: Validator<T>): ValidatorRules<T> = extend(validator)
 
-    @ValidatorBuilderDsl
-    infix fun run(validator: Validator<T>): ValidatorBuilder<T> = extend(validator)
+    @ValidatorRulesDsl
+    infix fun run(validator: Validator<T>): ValidatorRules<T> = extend(validator)
 
     // stopAtFirstError() -> not implemented yet.
 
     // KProperty0 ----------------------------------------------------
-    @ValidatorBuilderDsl
+    @ValidatorRulesDsl
     infix fun <R> KProperty0<R?>.always(rule: Rule<Any>): RuleBuilder<R>
 
-    @ValidatorBuilderDsl
+    @ValidatorRulesDsl
     operator fun <R> KProperty0<R?>.invoke(block: RuleBuilder<R>.() -> Unit) {
         this.always(Optional()).apply(block)
     }
 
-    @ValidatorBuilderDsl
+    @ValidatorRulesDsl
     infix fun <R> KProperty0<R?>.required(block: RuleBuilder<R>.() -> Unit): RuleBuilder<R> {
         return this.always(Required()).apply(block)
     }
 
-    @ValidatorBuilderDsl
+    @ValidatorRulesDsl
     infix fun <R> KProperty0<R?>.required(rule: Rule<R>): RuleBuilder<R> {
         return this.always(Required()).and(rule)
     }
 
-    @ValidatorBuilderDsl
+    @ValidatorRulesDsl
     infix fun <E, R : Collection<E?>> KProperty0<R?>.each(rule: Rule<E>): RuleBuilder<R> {
         return this.always(Optional()).and(Each(rule))
     }
 
     // KProperty1 ----------------------------------------------------
-    @ValidatorBuilderDsl
+    @ValidatorRulesDsl
     infix fun <R> KProperty1<T, R?>.always(rule: Rule<Any>): RuleBuilder<R>
 
-    @ValidatorBuilderDsl
+    @ValidatorRulesDsl
     operator fun <R> KProperty1<T, R?>.invoke(block: RuleBuilder<R>.() -> Unit) {
         this.always(Optional()).apply(block)
     }
 
-    @ValidatorBuilderDsl
+    @ValidatorRulesDsl
     infix fun <R> KProperty1<T, R?>.required(block: RuleBuilder<R>.() -> Unit): RuleBuilder<R> {
         return this.always(Required()).apply(block)
     }
 
-    @ValidatorBuilderDsl
+    @ValidatorRulesDsl
     infix fun <R> KProperty1<T, R?>.required(rule: Rule<R>): RuleBuilder<R> {
         return this.always(Required()).and(rule)
     }
 
-    @ValidatorBuilderDsl
+    @ValidatorRulesDsl
     infix fun <E, R : Collection<E?>> KProperty1<T, R?>.each(rule: Rule<E>): RuleBuilder<R> {
         return this.always(Optional()).and(Each(rule))
     }
@@ -167,4 +167,3 @@ interface ValidatorBuilder<T> {
     infix fun <E, V : Collection<E?>> each(rule: Rule<E>): Rule<V> = Each(rule)
 
 }
-

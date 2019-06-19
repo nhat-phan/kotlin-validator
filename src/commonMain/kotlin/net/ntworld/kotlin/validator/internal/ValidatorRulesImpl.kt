@@ -3,12 +3,12 @@ package net.ntworld.kotlin.validator.internal
 import net.ntworld.kotlin.validator.Rule
 import net.ntworld.kotlin.validator.RuleBuilder
 import net.ntworld.kotlin.validator.Validator
-import net.ntworld.kotlin.validator.ValidatorBuilder
+import net.ntworld.kotlin.validator.ValidatorRules
 import kotlin.reflect.KProperty0
 import kotlin.reflect.KProperty1
 
-internal class ValidatorBuilderImpl<T>(private val validator: ValidatorImpl<T>) : ValidatorBuilder<T> {
-    override fun extend(validator: Validator<in T>): ValidatorBuilder<T> {
+internal class ValidatorRulesImpl<T>(private val validator: ValidatorImpl<T>) : ValidatorRules<T> {
+    override fun extend(validator: Validator<in T>): ValidatorRules<T> {
         this.validator.extend(validator)
         return this
     }
