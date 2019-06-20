@@ -12,12 +12,6 @@ interface ValidatorRules<T>: BuiltinRules {
     @ValidatorRulesDsl
     infix fun extend(validator: Validator<in T>): ValidatorRules<T>
 
-    @ValidatorRulesDsl
-    infix fun use(validator: Validator<T>): ValidatorRules<T> = extend(validator)
-
-    @ValidatorRulesDsl
-    infix fun run(validator: Validator<T>): ValidatorRules<T> = extend(validator)
-
     // stopAtFirstError() -> not implemented yet.
 
     // KProperty0 ----------------------------------------------------
