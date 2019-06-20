@@ -1,6 +1,14 @@
 # Kotlin Validator
+[![Travis](https://jitpack.io/v/nhat-phan/kotlin-validator.svg?style=flat-square)](https://jitpack.io/#nhat-phan/kotlin-validator/0.4.2)
 
-A kotlin multi-platform library for validating data.
+A kotlin multi-platform library for validating data. 
+
+Highlighted features:
+
+* Fluent syntax with type safe Kotlin-DSL
+* Support nested structure, array-item validation
+* Extendable rules (custom rule)
+* Custom message
 
 ## Install
 
@@ -19,7 +27,7 @@ allprojects {
 
 // Step 2. Add the dependency
 dependencies {
-    implementation 'com.github.nhat-phan:kotlin-validator:0.4.2'
+    implementation 'com.github.nhat-phan.kotlin-validator:kotlin-validator:0.4.2'
 }
 
 ```
