@@ -5,7 +5,7 @@ import net.ntworld.kotlin.validator.MESSAGE_NESTED_VALIDATOR
 import kotlin.reflect.KProperty0
 import kotlin.reflect.KProperty1
 
-class ValidatorImpl<T>(block: ValidatorRules<T>.() -> Unit) : Rule<T>, Validator<T> {
+internal class ValidatorImpl<T>(block: ValidatorRules<T>.() -> Unit) : Rule<T>, Validator<T> {
     override val message: String = MESSAGE_NESTED_VALIDATOR
 
     override fun passes(attribute: String, value: T?): Boolean {

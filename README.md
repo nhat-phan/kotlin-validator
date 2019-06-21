@@ -1,5 +1,5 @@
 # Kotlin Validator
-[![Travis](https://jitpack.io/v/nhat-phan/kotlin-validator.svg?style=flat-square)](https://jitpack.io/#nhat-phan/kotlin-validator/0.4.2)
+[![Travis](https://jitpack.io/v/nhat-phan/kotlin-validator.svg?style=flat-square)](https://jitpack.io/#nhat-phan/kotlin-validator/0.4.3)
 
 A kotlin multi-platform library for validating data. 
 
@@ -27,7 +27,7 @@ allprojects {
 
 // Step 2. Add the dependency
 dependencies {
-    implementation 'com.github.nhat-phan.kotlin-validator:kotlin-validator:0.4.2'
+    implementation 'com.github.nhat-phan.kotlin-validator:kotlin-validator:0.4.3'
 }
 
 ```

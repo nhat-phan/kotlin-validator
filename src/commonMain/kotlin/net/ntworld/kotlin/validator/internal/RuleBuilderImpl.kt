@@ -5,7 +5,7 @@ import net.ntworld.kotlin.validator.RuleBuilder
 import kotlin.reflect.KProperty0
 import kotlin.reflect.KProperty1
 
-class RuleBuilderImpl<T>(started: Rule<Any>) : RuleBuilder<T> {
+internal class RuleBuilderImpl<T>(started: Rule<Any>) : RuleBuilder<T> {
     internal val ruleCollection = RuleCollectionImpl<T>(started)
 
     override var rule: Rule<T>

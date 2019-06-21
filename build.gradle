@@ -5,7 +5,7 @@ repositories {
     mavenCentral()
 }
 group 'com.github.nhat-phan.kotlin-validator'
-version '0.4.2'
+version '0.4.3'
 
 apply plugin: 'maven-publish'
 
