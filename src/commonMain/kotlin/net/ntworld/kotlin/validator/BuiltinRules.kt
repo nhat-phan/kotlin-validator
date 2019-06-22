@@ -31,44 +31,37 @@ interface BuiltinRules {
     infix fun <V> passes(fn: (V?) -> Boolean): Rule<V> = pass(fn)
 
     @RuleDsl
-    fun <V> eq(value: V): Rule<V> where V : Number, V : Comparable<V> =
-        NumberComparison(OPERATOR_EQUAL, value)
+    fun <V> eq(value: V): Rule<V> where V : Number, V : Comparable<V> = NumberComparison(OPERATOR_EQUAL, value)
 
     @RuleDsl
-    fun <V> equal(value: V): Rule<V> where V : Number, V : Comparable<V> =
-        NumberComparison(OPERATOR_EQUAL, value)
+    fun <V> equal(value: V): Rule<V> where V : Number, V : Comparable<V> = eq(value)
 
     @RuleDsl
-    fun <V> gt(min: V): Rule<V> where V : Number, V : Comparable<V> =
-        NumberComparison(OPERATOR_GREATER_THAN, min)
+    fun <V> gt(min: V): Rule<V> where V : Number, V : Comparable<V> = NumberComparison(OPERATOR_GREATER_THAN, min)
 
     @RuleDsl
-    fun <V> greaterThan(min: V): Rule<V> where V : Number, V : Comparable<V> =
-        NumberComparison(OPERATOR_GREATER_THAN, min)
+    fun <V> greaterThan(min: V): Rule<V> where V : Number, V : Comparable<V> = gt(min)
 
     @RuleDsl
     fun <V> gte(min: V): Rule<V> where V : Number, V : Comparable<V> =
         NumberComparison(OPERATOR_GREATER_THAN_OR_EQUAL, min)
 
     @RuleDsl
-    fun <V> greaterThanOrEqual(min: V): Rule<V> where V : Number, V : Comparable<V> =
-        NumberComparison(OPERATOR_GREATER_THAN_OR_EQUAL, min)
+    fun <V> greaterThanOrEqual(min: V): Rule<V> where V : Number, V : Comparable<V> = gte(min)
 
     @RuleDsl
     fun <V> lt(max: V): Rule<V> where V : Number, V : Comparable<V> =
         NumberComparison(OPERATOR_LESS_THAN, max)
 
     @RuleDsl
-    fun <V> lessThan(max: V): Rule<V> where V : Number, V : Comparable<V> =
-        NumberComparison(OPERATOR_LESS_THAN, max)
+    fun <V> lessThan(max: V): Rule<V> where V : Number, V : Comparable<V> = lt(max)
 
     @RuleDsl
     fun <V> lte(max: V): Rule<V> where V : Number, V : Comparable<V> =
         NumberComparison(OPERATOR_LESS_THAN_OR_EQUAL, max)
 
     @RuleDsl
-    fun <V> lessThanOrEqual(max: V): Rule<V> where V : Number, V : Comparable<V> =
-        NumberComparison(OPERATOR_LESS_THAN_OR_EQUAL, max)
+    fun <V> lessThanOrEqual(max: V): Rule<V> where V : Number, V : Comparable<V> = lte(max)
 
     @RuleDsl
     fun minLength(value: Int): Rule<String> = StringLength(OPERATOR_GREATER_THAN_OR_EQUAL, value)

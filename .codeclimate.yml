@@ -41,7 +41,7 @@ checks:
   similar-code:
     enabled: true
     config:
-      threshold: 70
+      threshold: 100
   identical-code:
     enabled: true
     config:
