@@ -2,22 +2,17 @@ package net.ntworld.kotlin.validator.rule
 
 import net.ntworld.kotlin.validator.*
 import net.ntworld.kotlin.validator.exception.IllegalOperatorException
+import net.ntworld.kotlin.validator.internal.RulesWithOperatorMessageFactory
 
 class ArraySize<T>(
     private val operator: String,
     private val value: Int
 ) : Rule<T> {
-    override val message: String
-        get() {
-            return when (operator) {
-                OPERATOR_EQUAL -> fillMessage(MESSAGE_ARRAY_SIZE_EQUAL, value)
-                OPERATOR_GREATER_THAN -> fillMessage(MESSAGE_ARRAY_SIZE_GREATER_THAN, value)
-                OPERATOR_GREATER_THAN_OR_EQUAL -> fillMessage(MESSAGE_ARRAY_SIZE_GREATER_THAN_OR_EQUAL, value)
-                OPERATOR_LESS_THAN -> fillMessage(MESSAGE_ARRAY_SIZE_LESS_THAN, value)
-                OPERATOR_LESS_THAN_OR_EQUAL -> fillMessage(MESSAGE_ARRAY_SIZE_LESS_THAN_OR_EQUAL, value)
-                else -> throw IllegalOperatorException()
-            }
-        }
+    override val message: String = RulesWithOperatorMessageFactory.getMessage(
+        RulesWithOperatorMessageFactory.Type.ArraySize,
+        operator,
+        value
+    )
 
     override fun passes(attribute: String, value: T?): Boolean {
         return when (value) {
@@ -47,10 +42,6 @@ class ArraySize<T>(
             OPERATOR_LESS_THAN_OR_EQUAL -> size <= this.value
             else -> false
         }
-    }
-
-    private fun fillMessage(message: String, value: Int): String {
-        return message.replace("{size}", value.toString())
     }
 
     companion object {

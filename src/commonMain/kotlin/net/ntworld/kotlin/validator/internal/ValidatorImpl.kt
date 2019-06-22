@@ -27,6 +27,12 @@ internal class ValidatorImpl<T>(block: ValidatorRules<T>.() -> Unit) : Rule<T>, 
         ValidatorRulesImpl(this).apply(block)
     }
 
+    private fun <R> registerRules(key: String, rules: RuleCollectionImpl<R>) {
+        @Suppress("UNCHECKED_CAST")
+        val item = data[key] as ValidatorItem<T, R>
+        item.list.add(rules)
+    }
+
     internal fun <R> registerProperty(property: KProperty0<R?>, rules: RuleCollectionImpl<R>) {
         val key = property.name
         if (!data.containsKey(key)) {
@@ -34,9 +40,7 @@ internal class ValidatorImpl<T>(block: ValidatorRules<T>.() -> Unit) : Rule<T>, 
             return
         }
 
-        @Suppress("UNCHECKED_CAST")
-        val item = data[key] as ValidatorItem<T, R>
-        item.list.add(rules)
+        this.registerRules(key, rules)
     }
 
     internal fun <R> registerProperty(property: KProperty1<T, R?>, rules: RuleCollectionImpl<R>) {
@@ -46,9 +50,7 @@ internal class ValidatorImpl<T>(block: ValidatorRules<T>.() -> Unit) : Rule<T>, 
             return
         }
 
-        @Suppress("UNCHECKED_CAST")
-        val item = data[key] as ValidatorItem<T, R>
-        item.list.add(rules)
+        this.registerRules(key, rules)
     }
 
     override fun extend(validator: Validator<in T>): Validator<T> {
