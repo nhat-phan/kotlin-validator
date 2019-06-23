@@ -1,46 +1,34 @@
 package net.ntworld.kotlin.validator.rule
 
 import net.ntworld.kotlin.validator.*
-import net.ntworld.kotlin.validator.exception.IllegalOperatorException
-import net.ntworld.kotlin.validator.internal.RulesWithOperatorMessageFactory
+import net.ntworld.kotlin.validator.exception.IllegalTypeException
 
 class ArraySize<T>(
-    private val operator: String,
-    private val value: Int
-) : Rule<T> {
-    override val message: String = RulesWithOperatorMessageFactory.getMessage(
-        RulesWithOperatorMessageFactory.Type.ArraySize,
-        operator,
-        value
-    )
+    operator: String,
+    value: Int
+) : Comparison<Int>(operator, value), Rule<T> {
+    override val messageEqual: String = MESSAGE_ARRAY_SIZE_EQUAL
+    override val messageGreaterThan: String = MESSAGE_ARRAY_SIZE_GREATER_THAN
+    override val messageGreaterThanOrEqual: String = MESSAGE_ARRAY_SIZE_GREATER_THAN_OR_EQUAL
+    override val messageLessThan: String = MESSAGE_ARRAY_SIZE_LESS_THAN
+    override val messageLessThanOrEqual: String = MESSAGE_ARRAY_SIZE_LESS_THAN_OR_EQUAL
 
     override fun passes(attribute: String, value: T?): Boolean {
         return when (value) {
-            null -> runPasses(0)
-            is String -> runPasses(value.length)
-            is Collection<*> -> runPasses(value.size)
-            is Map<*, *> -> runPasses(value.size)
-            is Array<*> -> runPasses(value.size)
-            is BooleanArray -> runPasses(value.size)
-            is ByteArray -> runPasses(value.size)
-            is ShortArray -> runPasses(value.size)
-            is IntArray -> runPasses(value.size)
-            is LongArray -> runPasses(value.size)
-            is FloatArray -> runPasses(value.size)
-            is DoubleArray -> runPasses(value.size)
-            is CharArray -> runPasses(value.size)
-            else -> throw IllegalOperatorException()
-        }
-    }
-
-    private fun runPasses(size: Int): Boolean {
-        return when (operator) {
-            OPERATOR_EQUAL -> size == this.value
-            OPERATOR_GREATER_THAN -> size > this.value
-            OPERATOR_GREATER_THAN_OR_EQUAL -> size >= this.value
-            OPERATOR_LESS_THAN -> size < this.value
-            OPERATOR_LESS_THAN_OR_EQUAL -> size <= this.value
-            else -> false
+            null -> compareTo(0)
+            is String -> compareTo(value.length)
+            is Collection<*> -> compareTo(value.size)
+            is Map<*, *> -> compareTo(value.size)
+            is Array<*> -> compareTo(value.size)
+            is BooleanArray -> compareTo(value.size)
+            is ByteArray -> compareTo(value.size)
+            is ShortArray -> compareTo(value.size)
+            is IntArray -> compareTo(value.size)
+            is LongArray -> compareTo(value.size)
+            is FloatArray -> compareTo(value.size)
+            is DoubleArray -> compareTo(value.size)
+            is CharArray -> compareTo(value.size)
+            else -> throw IllegalTypeException(value.toString(), this)
         }
     }
 
