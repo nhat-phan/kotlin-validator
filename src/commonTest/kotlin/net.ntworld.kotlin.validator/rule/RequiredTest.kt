@@ -74,7 +74,7 @@ class RequiredTest {
         TestData(type = "String", value = null, valid = false),
         TestData(type = "String", value = "", valid = false),
         TestData(type = "String", value = "abc", valid = true),
-        TestData(type = "String", value = "   ", valid = true)
+        TestData(type = "String", value = "   ", valid = false)
     )
 
     private val booleanArrayDataset = listOf<TestData<BooleanArray?>>(

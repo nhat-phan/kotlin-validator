@@ -9,7 +9,7 @@ internal class Required : Rule<Any> {
     override fun passes(attribute: String, value: Any?): Boolean {
         when (value) {
             null -> return false
-            is String -> return value.isNotEmpty()
+            is String -> return value.isNotEmpty() && value.isNotBlank()
             is Collection<*> -> return value.isNotEmpty()
             is Map<*, *> -> return value.isNotEmpty()
             is Array<*> -> return value.isNotEmpty()
