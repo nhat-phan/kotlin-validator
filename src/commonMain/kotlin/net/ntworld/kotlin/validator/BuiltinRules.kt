@@ -9,15 +9,15 @@ import net.ntworld.kotlin.validator.rule.StringLength
 
 interface BuiltinRules {
     @RuleDsl
-    val exists: Rule<Any>
+    val exists: PremierRule
         get() = RuleFactory.notNull
 
     @RuleDsl
-    val required: Rule<Any>
+    val required: PremierRule
         get() = RuleFactory.required
 
     @RuleDsl
-    val notNull: Rule<Any>
+    val notNull: PremierRule
         get() = RuleFactory.notNull
 
     @RuleDsl

@@ -16,7 +16,7 @@ interface ValidatorRules<T>: BuiltinRules {
 
     // KProperty0 ----------------------------------------------------
     @ValidatorRulesDsl
-    infix fun <R> KProperty0<R?>.always(rule: Rule<Any>): RuleBuilder<R>
+    infix fun <R> KProperty0<R?>.always(rule: PremierRule): RuleBuilder<R>
 
     @ValidatorRulesDsl
     operator fun <R> KProperty0<R?>.invoke(block: RuleBuilder<R>.() -> Unit) {
@@ -40,7 +40,7 @@ interface ValidatorRules<T>: BuiltinRules {
 
     // KProperty1 ----------------------------------------------------
     @ValidatorRulesDsl
-    infix fun <R> KProperty1<T, R?>.always(rule: Rule<Any>): RuleBuilder<R>
+    infix fun <R> KProperty1<T, R?>.always(rule: PremierRule): RuleBuilder<R>
 
     @ValidatorRulesDsl
     operator fun <R> KProperty1<T, R?>.invoke(block: RuleBuilder<R>.() -> Unit) {

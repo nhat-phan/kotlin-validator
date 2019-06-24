@@ -1,9 +1,9 @@
 package net.ntworld.kotlin.validator.rule
 
 import net.ntworld.kotlin.validator.MESSAGE_REQUIRED
-import net.ntworld.kotlin.validator.Rule
+import net.ntworld.kotlin.validator.PremierRule
 
-internal class Required : Rule<Any> {
+internal class Required : PremierRule {
     override val message: String = MESSAGE_REQUIRED
 
     override fun passes(attribute: String, value: Any?): Boolean {

@@ -3,8 +3,8 @@ package net.ntworld.kotlin.validator.rule
 import net.ntworld.kotlin.validator.*
 
 internal class StringLength(
-    private val operator: String,
-    private val value: Int
+    operator: String,
+    value: Int
 ) : Comparison<Int>(operator, value), Rule<String> {
     override val messageEqual: String = MESSAGE_STRING_LENGTH_EQUAL
     override val messageGreaterThan: String = MESSAGE_STRING_LENGTH_GREATER_THAN

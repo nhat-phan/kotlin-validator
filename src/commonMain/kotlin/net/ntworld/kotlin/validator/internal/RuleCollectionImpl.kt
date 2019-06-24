@@ -1,14 +1,15 @@
 package net.ntworld.kotlin.validator.internal
 
 import net.ntworld.kotlin.validator.MessageBag
+import net.ntworld.kotlin.validator.PremierRule
 import net.ntworld.kotlin.validator.Rule
 
 internal open class RuleCollectionImpl<T>(
-    started: Rule<Any>,
+    premierRule: PremierRule,
     internal var customMessage: String? = null
 ) : Rule<T> {
     internal val collection: MutableList<RuleExecutor<T>> = mutableListOf()
-    private var startedRule: RuleExecutor<Any> = RuleExecutor(started)
+    private var startedRule: RuleExecutor<Any> = RuleExecutor(premierRule)
     override val message: String
         get() {
             return customMessage ?: ""
