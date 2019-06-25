@@ -45,6 +45,38 @@ class FluentSyntaxTest {
         }
     }
 
+    fun block() {
+        validator<User> {
+            User::email {
+                rule = notEmptyString
+                message = "my message"
+            }
+        }
+
+        user.validate {
+            user::email {
+                rule = notEmptyString
+                message = "my message"
+            }
+        }
+    }
+
+    fun always_required_block() {
+        validator<User> {
+            User::email required {
+                rule = notEmptyString
+                message = "my message"
+            }
+        }
+
+        user.validate {
+            user::email required {
+                rule = notEmptyString
+                message = "my message"
+            }
+        }
+    }
+
     fun required_rule() {
         validator<User> {
             User::email required passRegex("regex")
@@ -89,6 +121,46 @@ class FluentSyntaxTest {
         user.validate {
             user::address {
                 Address::street always required and passRegex("regex")
+            }
+        }
+    }
+
+    fun nested_block() {
+        validator<User> {
+            User::address {
+                Address::street {
+                    rule = notEmptyString
+                    message = "my message"
+                }
+            }
+        }
+
+        user.validate {
+            user::address {
+                Address::street {
+                    rule = notEmptyString
+                    message = "my message"
+                }
+            }
+        }
+    }
+
+    fun nested_required_block() {
+        validator<User> {
+            User::address {
+                Address::street required {
+                    rule = notEmptyString
+                    message = "my message"
+                }
+            }
+        }
+
+        user.validate {
+            user::address {
+                Address::street required {
+                    rule = notEmptyString
+                    message = "my message"
+                }
             }
         }
     }
