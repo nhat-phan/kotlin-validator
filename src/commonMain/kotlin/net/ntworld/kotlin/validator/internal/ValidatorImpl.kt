@@ -8,6 +8,12 @@ import kotlin.reflect.KProperty1
 internal class ValidatorImpl<T>(block: ValidatorRules<T>.() -> Unit) : Rule<T>, Validator<T> {
     override val message: String = MESSAGE_NESTED_VALIDATOR
 
+    internal val data: MutableMap<String, ValidatorItem<in T, *>> = mutableMapOf()
+
+    init {
+        ValidatorRulesImpl(this).apply(block)
+    }
+
     override fun passes(attribute: String, value: T?): Boolean {
         if (null !== value) {
             return this.validate(value).isValid
@@ -21,19 +27,13 @@ internal class ValidatorImpl<T>(block: ValidatorRules<T>.() -> Unit) : Rule<T>, 
         }
     }
 
-    private val data: MutableMap<String, ValidatorItem<in T, *>> = mutableMapOf()
-
-    init {
-        ValidatorRulesImpl(this).apply(block)
-    }
-
     private fun <R> registerRules(key: String, rules: RuleCollectionImpl<R>) {
         @Suppress("UNCHECKED_CAST")
         val item = data[key] as ValidatorItem<T, R>
         item.list.add(rules)
     }
 
-    internal fun <R> registerProperty(property: KProperty0<R?>, rules: RuleCollectionImpl<R>) {
+    internal fun <R> registerProperty0(property: KProperty0<R?>, rules: RuleCollectionImpl<R>) {
         val key = property.name
         if (!data.containsKey(key)) {
             data[key] = ValidatorItem(property, null, mutableListOf(rules))
@@ -43,7 +43,7 @@ internal class ValidatorImpl<T>(block: ValidatorRules<T>.() -> Unit) : Rule<T>, 
         this.registerRules(key, rules)
     }
 
-    internal fun <R> registerProperty(property: KProperty1<T, R?>, rules: RuleCollectionImpl<R>) {
+    internal fun <R> registerProperty1(property: KProperty1<T, R?>, rules: RuleCollectionImpl<R>) {
         val key = property.name
         if (!data.containsKey(key)) {
             data[key] = ValidatorItem(null, property, mutableListOf(rules))

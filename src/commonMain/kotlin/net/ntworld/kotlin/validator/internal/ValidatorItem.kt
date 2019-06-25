@@ -7,8 +7,8 @@ import kotlin.reflect.KProperty0
 import kotlin.reflect.KProperty1
 
 internal class ValidatorItem<T, R>(
-    val property0: KProperty0<R?>?,
-    val property1: KProperty1<T, R?>?,
+    private val property0: KProperty0<R?>?,
+    private val property1: KProperty1<T, R?>?,
     val list: MutableList<RuleCollectionImpl<R>>
 ) {
     internal fun validate(attribute: String, input: T, errors: MessageBag): Boolean {
@@ -38,11 +38,6 @@ internal class ValidatorItem<T, R>(
     internal fun merge(item: ValidatorItem<*, *>) {
         this.list.addAll(item.list as List<RuleCollectionImpl<R>>)
     }
-
-    private fun validateRules(rules: RuleCollectionImpl<R>, attribute: String, value: R?): Boolean {
-        return rules.passes(attribute, value)
-    }
-
 
     private fun getValue(attribute: String, input: T): R? {
         when (input) {

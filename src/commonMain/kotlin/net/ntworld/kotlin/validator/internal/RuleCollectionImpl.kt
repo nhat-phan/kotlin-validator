@@ -9,14 +9,14 @@ internal open class RuleCollectionImpl<T>(
     internal var customMessage: String? = null
 ) : Rule<T> {
     internal val collection: MutableList<RuleExecutor<T>> = mutableListOf()
-    private var startedRule: RuleExecutor<Any> = RuleExecutor(premierRule)
+    private var premierRule: RuleExecutor<Any> = RuleExecutor(premierRule)
     override val message: String
         get() {
             return customMessage ?: ""
         }
 
     override fun passes(attribute: String, value: T?): Boolean {
-        val startedValid = startedRule.passes(attribute, value)
+        val startedValid = premierRule.passes(attribute, value)
         val valid = collection.fold(true) { acc, rule ->
             rule.passes(attribute, value) && acc
         }
@@ -29,8 +29,8 @@ internal open class RuleCollectionImpl<T>(
             return
         }
 
-        if (!startedRule.isValid) {
-            return startedRule.buildErrorMessages(errors, attribute, value)
+        if (!premierRule.isValid) {
+            return premierRule.buildErrorMessages(errors, attribute, value)
         }
         collection.forEach {
             it.buildErrorMessages(errors, attribute, value)

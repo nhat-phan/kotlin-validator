@@ -34,7 +34,7 @@ internal class RuleBuilderImpl<T>(premierRule: PremierRule) : RuleBuilder<T> {
     override fun <R> KProperty0<R?>.always(rule: PremierRule): RuleBuilder<R> {
         val validator = ValidatorImpl<T> {}
         val builder = RuleBuilderImpl<R>(rule)
-        validator.registerProperty(this, builder.ruleCollection)
+        validator.registerProperty0(this, builder.ruleCollection)
         this@RuleBuilderImpl.ruleCollection.addRule(validator)
 
         return builder
@@ -43,7 +43,7 @@ internal class RuleBuilderImpl<T>(premierRule: PremierRule) : RuleBuilder<T> {
     override fun <R> KProperty1<T, R?>.always(rule: PremierRule): RuleBuilder<R> {
         val validator = ValidatorImpl<T> {}
         val builder = RuleBuilderImpl<R>(rule)
-        validator.registerProperty(this, builder.ruleCollection)
+        validator.registerProperty1(this, builder.ruleCollection)
         this@RuleBuilderImpl.ruleCollection.addRule(validator)
 
         return builder
