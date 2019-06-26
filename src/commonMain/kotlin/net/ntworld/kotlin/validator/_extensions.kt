@@ -4,7 +4,7 @@ import net.ntworld.kotlin.validator.exception.ValidationException
 import net.ntworld.kotlin.validator.internal.RuleCollectionImpl
 import net.ntworld.kotlin.validator.internal.ValidatorImpl
 import net.ntworld.kotlin.validator.rule.ArraySize
-import net.ntworld.kotlin.validator.rule.Optional
+import net.ntworld.kotlin.validator.rule.Skipped
 
 infix fun <T : Any> Rule<T>.and(rule: Rule<T>): Rule<T> {
     if (this is RuleCollectionImpl<T>) {
@@ -15,7 +15,7 @@ infix fun <T : Any> Rule<T>.and(rule: Rule<T>): Rule<T> {
         return rule.addRule(this)
     }
 
-    return RuleCollectionImpl<T>(Optional()).addRule(this).addRule(rule)
+    return RuleCollectionImpl<T>(Skipped()).addRule(this).addRule(rule)
 }
 
 operator fun <T : Any> Rule<T>.plus(rule: Rule<T>): Rule<T> {

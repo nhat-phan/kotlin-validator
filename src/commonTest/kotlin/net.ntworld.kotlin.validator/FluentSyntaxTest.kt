@@ -13,10 +13,20 @@ class FluentSyntaxTest {
         }
     }
 
+    data class Document(
+        val locations: List<String>?,
+        val name: String
+    ) : Validatable {
+        override fun containsKey(key: String): Boolean {
+            return true
+        }
+    }
+
     data class User(
         val email: String,
         val age: Int,
-        val address: Address
+        val address: Address,
+        val documents: List<Document>? = null
     ) : Validatable {
         override fun containsKey(key: String): Boolean {
             return true
@@ -28,6 +38,8 @@ class FluentSyntaxTest {
     fun always_required() {
         validator<User> {
             User::email always required
+            User::documents always required
+            User::documents each notNull
         }
 
         user.validate {

@@ -1,10 +1,5 @@
 package net.ntworld.kotlin.validator
 
-import net.ntworld.kotlin.validator.rule.Optional
-import net.ntworld.kotlin.validator.rule.Required
-import kotlin.reflect.KProperty0
-import kotlin.reflect.KProperty1
-
 interface RuleBuilder<T> {
     var rule: Rule<T>
 

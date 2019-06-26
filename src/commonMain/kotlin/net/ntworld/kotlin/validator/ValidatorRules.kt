@@ -1,7 +1,7 @@
 package net.ntworld.kotlin.validator
 
 import net.ntworld.kotlin.validator.rule.Each
-import net.ntworld.kotlin.validator.rule.Optional
+import net.ntworld.kotlin.validator.rule.Skipped
 import net.ntworld.kotlin.validator.rule.Required
 import kotlin.reflect.KProperty0
 import kotlin.reflect.KProperty1
@@ -20,7 +20,7 @@ interface ValidatorRules<T>: BuiltinRules {
 
     @ValidatorRulesDsl
     operator fun <R: Any> KProperty0<R?>.invoke(block: AlwaysRuleBuilder<R>.() -> Unit) {
-        this.always(Optional()).apply(block)
+        this.always(Skipped()).apply(block)
     }
 
     @ValidatorRulesDsl
@@ -35,7 +35,7 @@ interface ValidatorRules<T>: BuiltinRules {
 
     @ValidatorRulesDsl
     infix fun <E, R : Collection<E?>> KProperty0<R?>.each(rule: Rule<E>): RuleBuilder<R> {
-        return this.always(Optional()).and(Each(rule))
+        return this.always(Skipped()).and(Each(rule))
     }
 
     // KProperty1 ----------------------------------------------------
@@ -44,7 +44,7 @@ interface ValidatorRules<T>: BuiltinRules {
 
     @ValidatorRulesDsl
     operator fun <R: Any> KProperty1<T, R?>.invoke(block: AlwaysRuleBuilder<R>.() -> Unit) {
-        this.always(Optional()).apply(block)
+        this.always(Skipped()).apply(block)
     }
 
     @ValidatorRulesDsl
@@ -59,6 +59,6 @@ interface ValidatorRules<T>: BuiltinRules {
 
     @ValidatorRulesDsl
     infix fun <E, R : Collection<E?>> KProperty1<T, R?>.each(rule: Rule<E>): RuleBuilder<R> {
-        return this.always(Optional()).and(Each(rule))
+        return this.always(Skipped()).and(Each(rule))
     }
 }

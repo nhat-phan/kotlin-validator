@@ -1,6 +1,6 @@
 package net.ntworld.kotlin.validator
 
-internal const val MESSAGE_OPTIONAL = ""
+internal const val MESSAGE_SKIPPED = ""
 internal const val MESSAGE_REQUIRED = ":attribute is required."
 internal const val MESSAGE_NOT_NULL = ":attribute must be exist."
 

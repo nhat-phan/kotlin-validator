@@ -1,6 +1,7 @@
 package net.ntworld.kotlin.validator
 
-import net.ntworld.kotlin.validator.rule.Optional
+import net.ntworld.kotlin.validator.rule.Each
+import net.ntworld.kotlin.validator.rule.Skipped
 import net.ntworld.kotlin.validator.rule.Required
 import kotlin.reflect.KProperty0
 import kotlin.reflect.KProperty1
@@ -14,7 +15,7 @@ interface AlwaysRuleBuilder<T>: RuleBuilder<T> {
 
     @RuleBuilderDsl
     operator fun <R: Any> KProperty0<R?>.invoke(block: AlwaysRuleBuilder<R>.() -> Unit) {
-        this.always(Optional()).apply(block)
+        this.always(Skipped()).apply(block)
     }
 
     @RuleBuilderDsl
@@ -33,7 +34,7 @@ interface AlwaysRuleBuilder<T>: RuleBuilder<T> {
 
     @RuleBuilderDsl
     operator fun <R: Any> KProperty1<T, R?>.invoke(block: AlwaysRuleBuilder<R>.() -> Unit) {
-        this.always(Optional()).apply(block)
+        this.always(Skipped()).apply(block)
     }
 
     @RuleBuilderDsl
