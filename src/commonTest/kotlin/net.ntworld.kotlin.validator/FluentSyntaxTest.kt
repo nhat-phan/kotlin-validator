@@ -33,30 +33,50 @@ class FluentSyntaxTest {
         user.validate {
             user::email always required
         }
+
+        validator<User> {
+            User::email always required otherwise "this is custom message"
+            User::age always required otherwise {
+                "custom message via a function"
+            }
+        }
+
+        user.validate {
+            user::email always required otherwise "this is custom message"
+            user::age always required otherwise {
+                "custom message via a function"
+            }
+        }
     }
 
     fun always_required_and_rule() {
         validator<User> {
-            User::email always required and passRegex("regex")
+            User::email always required and passRegex("regex") otherwise "this is custom message"
+            User::age always required and gt(10) otherwise {
+                "custom message via a function"
+            }
         }
 
         user.validate {
             user::email always required and passRegex("regex")
+            user::age always required and gt(10) otherwise {
+                "custom message via a function"
+            }
         }
     }
 
     fun block() {
         validator<User> {
             User::email {
-                rule = notEmptyString
-                message = "my message"
+                rule = notEmptyString + minLength(10)
+                message = "this is custom message"
             }
         }
 
         user.validate {
             user::email {
-                rule = notEmptyString
-                message = "my message"
+                rule = notEmptyString + minLength(10)
+                message = "this is custom message"
             }
         }
     }
@@ -65,48 +85,48 @@ class FluentSyntaxTest {
         validator<User> {
             User::email required {
                 rule = notEmptyString
-                message = "my message"
+                message = "this is custom message"
             }
         }
 
         user.validate {
             user::email required {
                 rule = notEmptyString
-                message = "my message"
+                message = "this is custom message"
             }
         }
     }
 
     fun required_rule() {
         validator<User> {
-            User::email required passRegex("regex")
+            User::email required passRegex("regex") otherwise "this is custom message"
         }
 
         user.validate {
-            user::email required passRegex("regex")
+            user::email required passRegex("regex") otherwise "this is custom message"
         }
     }
 
     fun required_rule_and_rule() {
         validator<User> {
-            User::email required notEmptyString and passRegex("regex")
+            User::email required notEmptyString and passRegex("regex") otherwise "this is custom message"
         }
 
         user.validate {
-            user::email required notEmptyString and passRegex("regex")
+            user::email required notEmptyString and passRegex("regex") otherwise "this is custom message"
         }
     }
 
     fun nested_always_required() {
         validator<User> {
             User::address {
-                Address::street always required
+                Address::street always required otherwise "this is custom message"
             }
         }
 
         user.validate {
             user::address {
-                Address::street always required
+                Address::street always required otherwise "this is custom message"
             }
         }
     }
@@ -114,13 +134,13 @@ class FluentSyntaxTest {
     fun nested_always_required_and_rule() {
         validator<User> {
             User::address {
-                Address::street always required and passRegex("regex")
+                Address::street always required and passRegex("regex") otherwise "this is custom message"
             }
         }
 
         user.validate {
             user::address {
-                Address::street always required and passRegex("regex")
+                Address::street always required and passRegex("regex") otherwise "this is custom message"
             }
         }
     }
@@ -130,7 +150,7 @@ class FluentSyntaxTest {
             User::address {
                 Address::street {
                     rule = notEmptyString
-                    message = "my message"
+                    message = "this is custom message"
                 }
             }
         }
@@ -139,7 +159,7 @@ class FluentSyntaxTest {
             user::address {
                 Address::street {
                     rule = notEmptyString
-                    message = "my message"
+                    message = "this is custom message"
                 }
             }
         }
@@ -150,7 +170,7 @@ class FluentSyntaxTest {
             User::address {
                 Address::street required {
                     rule = notEmptyString
-                    message = "my message"
+                    message = "this is custom message"
                 }
             }
         }
@@ -159,7 +179,7 @@ class FluentSyntaxTest {
             user::address {
                 Address::street required {
                     rule = notEmptyString
-                    message = "my message"
+                    message = "this is custom message"
                 }
             }
         }
@@ -168,13 +188,13 @@ class FluentSyntaxTest {
     fun nested_required_rule() {
         validator<User> {
             User::address {
-                Address::street required passRegex("regex")
+                Address::street required passRegex("regex") otherwise "this is custom message"
             }
         }
 
         user.validate {
             user::address {
-                Address::street required passRegex("regex")
+                Address::street required passRegex("regex") otherwise "this is custom message"
             }
         }
     }
@@ -182,13 +202,13 @@ class FluentSyntaxTest {
     fun nested_required_rule_and_rule() {
         validator<User> {
             User::address {
-                Address::street required notEmptyString and passRegex("regex")
+                Address::street required notEmptyString and passRegex("regex") otherwise "this is custom message"
             }
         }
 
         user.validate {
             user::address {
-                Address::street required notEmptyString and passRegex("regex")
+                Address::street required notEmptyString and passRegex("regex") otherwise "this is custom message"
             }
         }
     }

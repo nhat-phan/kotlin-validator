@@ -14,5 +14,11 @@ interface RuleBuilder<T> {
     infix fun customMessage(message: String)
 
     @RuleBuilderDsl
+    infix fun customMessage(block: () -> String) = customMessage(block.invoke())
+
+    @RuleBuilderDsl
     infix fun otherwise(message: String) = customMessage(message)
+
+    @RuleBuilderDsl
+    infix fun otherwise(block: () -> String) = customMessage(block)
 }
