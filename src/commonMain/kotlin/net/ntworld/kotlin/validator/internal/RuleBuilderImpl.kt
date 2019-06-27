@@ -1,10 +1,11 @@
 package net.ntworld.kotlin.validator.internal
 
 import net.ntworld.kotlin.validator.*
+import net.ntworld.kotlin.validator.rule.Skipped
 import kotlin.reflect.KProperty0
 import kotlin.reflect.KProperty1
 
-internal class RuleBuilderImpl<T>(premierRule: PremierRule) : RuleBuilder<T>, AlwaysRuleBuilder<T> {
+internal class RuleBuilderImpl<T>(premierRule: PremierRule) : NestedRuleBuilder<T> {
     internal val ruleCollection = RuleCollectionImpl<T>(premierRule)
 
     override var rule: Rule<T>
@@ -45,5 +46,25 @@ internal class RuleBuilderImpl<T>(premierRule: PremierRule) : RuleBuilder<T>, Al
         this@RuleBuilderImpl.ruleCollection.addRule(validator)
 
         return builder
+    }
+
+    override fun <R : Any> KProperty0<R?>.invoke(block: NestedRuleBuilder<R>.() -> Unit) {
+        (this.always(Skipped()) as RuleBuilderImpl<R>).apply(block)
+    }
+
+    override fun <R : Any> KProperty1<T, R?>.invoke(block: NestedRuleBuilder<R>.() -> Unit) {
+        (this.always(Skipped()) as RuleBuilderImpl<R>).apply(block)
+    }
+
+    override fun or(rule: Rule<T>): WhetherRuleBuilder<T> {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun <R> KProperty0<R?>.whether(rule: WhetherPremierRule): WhetherRuleBuilder<R> {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun <R> KProperty1<T, R?>.whether(rule: WhetherPremierRule): WhetherRuleBuilder<R> {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 }

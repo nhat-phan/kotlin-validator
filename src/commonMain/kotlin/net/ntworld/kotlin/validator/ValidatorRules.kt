@@ -16,12 +16,10 @@ interface ValidatorRules<T>: BuiltinRules {
 
     // KProperty0 ----------------------------------------------------
     @ValidatorRulesDsl
-    infix fun <R> KProperty0<R?>.always(rule: PremierRule): AlwaysRuleBuilder<R>
+    operator fun <R: Any> KProperty0<R?>.invoke(block: NestedRuleBuilder<R>.() -> Unit)
 
     @ValidatorRulesDsl
-    operator fun <R: Any> KProperty0<R?>.invoke(block: AlwaysRuleBuilder<R>.() -> Unit) {
-        this.always(Skipped()).apply(block)
-    }
+    infix fun <R> KProperty0<R?>.always(rule: AlwaysPremierRule): AlwaysRuleBuilder<R>
 
     @ValidatorRulesDsl
     infix fun <R: Any> KProperty0<R?>.required(block: RuleBuilder<R>.() -> Unit): RuleBuilder<R> {
@@ -40,12 +38,10 @@ interface ValidatorRules<T>: BuiltinRules {
 
     // KProperty1 ----------------------------------------------------
     @ValidatorRulesDsl
-    infix fun <R> KProperty1<T, R?>.always(rule: PremierRule): AlwaysRuleBuilder<R>
+    operator fun <R: Any> KProperty1<T, R?>.invoke(block: NestedRuleBuilder<R>.() -> Unit)
 
     @ValidatorRulesDsl
-    operator fun <R: Any> KProperty1<T, R?>.invoke(block: AlwaysRuleBuilder<R>.() -> Unit) {
-        this.always(Skipped()).apply(block)
-    }
+    infix fun <R> KProperty1<T, R?>.always(rule: AlwaysPremierRule): AlwaysRuleBuilder<R>
 
     @ValidatorRulesDsl
     infix fun <R: Any> KProperty1<T, R?>.required(block: RuleBuilder<R>.() -> Unit): RuleBuilder<R> {
