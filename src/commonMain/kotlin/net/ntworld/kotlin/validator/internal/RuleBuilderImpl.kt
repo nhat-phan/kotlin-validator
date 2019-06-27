@@ -1,12 +1,10 @@
 package net.ntworld.kotlin.validator.internal
 
-import net.ntworld.kotlin.validator.Rule
-import net.ntworld.kotlin.validator.PremierRule
-import net.ntworld.kotlin.validator.RuleBuilder
+import net.ntworld.kotlin.validator.*
 import kotlin.reflect.KProperty0
 import kotlin.reflect.KProperty1
 
-internal open class RuleBuilderImpl<T>(premierRule: PremierRule) : RuleBuilder<T> {
+internal class RuleBuilderImpl<T>(premierRule: PremierRule) : RuleBuilder<T>, AlwaysRuleBuilder<T> {
     internal val ruleCollection = RuleCollectionImpl<T>(premierRule)
 
     override var rule: Rule<T>
@@ -23,5 +21,29 @@ internal open class RuleBuilderImpl<T>(premierRule: PremierRule) : RuleBuilder<T
 
     override fun customMessage(message: String) {
         this.message = message
+    }
+
+    override fun and(rule: Rule<T>): AlwaysRuleBuilder<T> {
+        ruleCollection.addRule(rule)
+
+        return this
+    }
+
+    override fun <R> KProperty0<R?>.always(rule: AlwaysPremierRule): AlwaysRuleBuilder<R> {
+        val validator = ValidatorImpl<T> {}
+        val builder = RuleBuilderImpl<R>(rule)
+        validator.registerProperty0(this, builder.ruleCollection)
+        this@RuleBuilderImpl.ruleCollection.addRule(validator)
+
+        return builder
+    }
+
+    override fun <R> KProperty1<T, R?>.always(rule: AlwaysPremierRule): AlwaysRuleBuilder<R> {
+        val validator = ValidatorImpl<T> {}
+        val builder = RuleBuilderImpl<R>(rule)
+        validator.registerProperty1(this, builder.ruleCollection)
+        this@RuleBuilderImpl.ruleCollection.addRule(validator)
+
+        return builder
     }
 }

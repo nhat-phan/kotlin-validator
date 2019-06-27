@@ -11,7 +11,7 @@ interface AlwaysRuleBuilder<T>: RuleBuilder<T> {
 
     // KProperty0 ----------------------------------------------------
     @RuleBuilderDsl
-    infix fun <R> KProperty0<R?>.always(rule: PremierRule): AlwaysRuleBuilder<R>
+    infix fun <R> KProperty0<R?>.always(rule: AlwaysPremierRule): AlwaysRuleBuilder<R>
 
     @RuleBuilderDsl
     operator fun <R: Any> KProperty0<R?>.invoke(block: AlwaysRuleBuilder<R>.() -> Unit) {
@@ -30,7 +30,7 @@ interface AlwaysRuleBuilder<T>: RuleBuilder<T> {
 
     // KProperty1 ----------------------------------------------------
     @RuleBuilderDsl
-    infix fun <R> KProperty1<T, R?>.always(rule: PremierRule): AlwaysRuleBuilder<R>
+    infix fun <R> KProperty1<T, R?>.always(rule: AlwaysPremierRule): AlwaysRuleBuilder<R>
 
     @RuleBuilderDsl
     operator fun <R: Any> KProperty1<T, R?>.invoke(block: AlwaysRuleBuilder<R>.() -> Unit) {

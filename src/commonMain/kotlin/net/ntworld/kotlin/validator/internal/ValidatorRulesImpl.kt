@@ -11,13 +11,13 @@ internal class ValidatorRulesImpl<T>(private val validator: ValidatorImpl<T>) : 
     }
 
     override fun <R> KProperty0<R?>.always(rule: PremierRule): AlwaysRuleBuilder<R> {
-        val builder = AlwaysRuleBuilderImpl<R>(rule)
+        val builder = RuleBuilderImpl<R>(rule)
         validator.registerProperty0(this, builder.ruleCollection)
         return builder
     }
 
     override fun <R> KProperty1<T, R?>.always(rule: PremierRule): AlwaysRuleBuilder<R> {
-        val builder = AlwaysRuleBuilderImpl<R>(rule)
+        val builder = RuleBuilderImpl<R>(rule)
         validator.registerProperty1(this, builder.ruleCollection)
         return builder
     }
