@@ -5,17 +5,20 @@ import net.ntworld.kotlin.validator.Rule
 import net.ntworld.kotlin.validator.Validator
 
 internal class RuleExecutor<T>(private val rule: Rule<T>) : Rule<T> {
+    internal var isRun: Boolean = false
     internal var isValid: Boolean = false
 
     override val message: String = rule.message
 
     override fun passes(attribute: String, value: T?): Boolean {
         isValid = rule.passes(attribute, value)
+        isRun = true
+
         return isValid
     }
 
     fun buildErrorMessages(errors: MessageBag, attribute: String, value: T?) {
-        if (this.isValid) {
+        if (this.isValid || !this.isRun) {
             return
         }
 

@@ -21,6 +21,10 @@ interface BuiltinRules {
         get() = RuleFactory.notNull
 
     @RuleDsl
+    val isNull: WhetherPremierRule
+        get() = RuleFactory.isNull
+
+    @RuleDsl
     val notEmptyString: Rule<String>
         get() = RuleFactory.notEmptyString
 

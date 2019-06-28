@@ -15,7 +15,9 @@ infix fun <T : Any> Rule<T>.and(rule: Rule<T>): Rule<T> {
         return rule.addRule(this)
     }
 
-    return RuleCollectionImpl<T>(Skipped()).addRule(this).addRule(rule)
+    val collection = RuleCollectionImpl<T>(Skipped())
+    return collection.addRule(this)
+        .addRule(rule)
 }
 
 operator fun <T : Any> Rule<T>.plus(rule: Rule<T>): Rule<T> {

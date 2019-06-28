@@ -5,8 +5,8 @@ import net.ntworld.kotlin.validator.rule.Skipped
 import kotlin.reflect.KProperty0
 import kotlin.reflect.KProperty1
 
-internal class RuleBuilderImpl<T>(premierRule: PremierRule) : NestedRuleBuilder<T> {
-    internal val ruleCollection = RuleCollectionImpl<T>(premierRule)
+internal class RuleBuilderImpl<T>(premierRule: PremierRule, usingOr: Boolean = false) : NestedRuleBuilder<T> {
+    internal val ruleCollection = RuleCollectionImpl<T>(premierRule, usingOr)
 
     override var rule: Rule<T>
         get() = ruleCollection
@@ -30,6 +30,14 @@ internal class RuleBuilderImpl<T>(premierRule: PremierRule) : NestedRuleBuilder<
         return this
     }
 
+    override fun <R : Any> KProperty0<R?>.invoke(block: NestedRuleBuilder<R>.() -> Unit) {
+        (this.always(Skipped()) as RuleBuilderImpl<R>).apply(block)
+    }
+
+    override fun <R : Any> KProperty1<T, R?>.invoke(block: NestedRuleBuilder<R>.() -> Unit) {
+        (this.always(Skipped()) as RuleBuilderImpl<R>).apply(block)
+    }
+
     override fun <R> KProperty0<R?>.always(rule: AlwaysPremierRule): AlwaysRuleBuilder<R> {
         val validator = ValidatorImpl<T> {}
         val builder = RuleBuilderImpl<R>(rule)
@@ -48,23 +56,27 @@ internal class RuleBuilderImpl<T>(premierRule: PremierRule) : NestedRuleBuilder<
         return builder
     }
 
-    override fun <R : Any> KProperty0<R?>.invoke(block: NestedRuleBuilder<R>.() -> Unit) {
-        (this.always(Skipped()) as RuleBuilderImpl<R>).apply(block)
-    }
-
-    override fun <R : Any> KProperty1<T, R?>.invoke(block: NestedRuleBuilder<R>.() -> Unit) {
-        (this.always(Skipped()) as RuleBuilderImpl<R>).apply(block)
-    }
-
     override fun or(rule: Rule<T>): WhetherRuleBuilder<T> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        ruleCollection.addRule(rule, false)
+
+        return this
     }
 
     override fun <R> KProperty0<R?>.whether(rule: WhetherPremierRule): WhetherRuleBuilder<R> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        val validator = ValidatorImpl<T> {}
+        val builder = RuleBuilderImpl<R>(rule, true)
+        validator.registerProperty0(this, builder.ruleCollection)
+        this@RuleBuilderImpl.ruleCollection.addRule(validator)
+
+        return builder
     }
 
     override fun <R> KProperty1<T, R?>.whether(rule: WhetherPremierRule): WhetherRuleBuilder<R> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        val validator = ValidatorImpl<T> {}
+        val builder = RuleBuilderImpl<R>(rule, true)
+        validator.registerProperty1(this, builder.ruleCollection)
+        this@RuleBuilderImpl.ruleCollection.addRule(validator)
+
+        return builder
     }
 }

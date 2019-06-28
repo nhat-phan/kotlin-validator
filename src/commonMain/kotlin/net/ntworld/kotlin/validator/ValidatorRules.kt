@@ -19,6 +19,11 @@ interface ValidatorRules<T>: BuiltinRules {
     operator fun <R: Any> KProperty0<R?>.invoke(block: NestedRuleBuilder<R>.() -> Unit)
 
     @ValidatorRulesDsl
+    infix fun <E, R : Collection<E?>> KProperty0<R?>.each(rule: Rule<E>): RuleBuilder<R> {
+        return this.always(Skipped()).and(Each(rule))
+    }
+
+    @ValidatorRulesDsl
     infix fun <R> KProperty0<R?>.always(rule: AlwaysPremierRule): AlwaysRuleBuilder<R>
 
     @ValidatorRulesDsl
@@ -32,13 +37,26 @@ interface ValidatorRules<T>: BuiltinRules {
     }
 
     @ValidatorRulesDsl
-    infix fun <E, R : Collection<E?>> KProperty0<R?>.each(rule: Rule<E>): RuleBuilder<R> {
-        return this.always(Skipped()).and(Each(rule))
+    infix fun <R> KProperty0<R?>.whether(rule: WhetherPremierRule): WhetherRuleBuilder<R>
+
+    @ValidatorRulesDsl
+    infix fun <R: Any> KProperty0<R?>.optional(block: RuleBuilder<R>.() -> Unit): RuleBuilder<R> {
+        return this.whether(Skipped()).apply(block)
+    }
+
+    @ValidatorRulesDsl
+    infix fun <R: Any> KProperty0<R?>.optional(rule: Rule<R>): WhetherRuleBuilder<R> {
+        return this.whether(Skipped()).or(rule)
     }
 
     // KProperty1 ----------------------------------------------------
     @ValidatorRulesDsl
     operator fun <R: Any> KProperty1<T, R?>.invoke(block: NestedRuleBuilder<R>.() -> Unit)
+
+    @ValidatorRulesDsl
+    infix fun <E, R : Collection<E?>> KProperty1<T, R?>.each(rule: Rule<E>): RuleBuilder<R> {
+        return this.always(Skipped()).and(Each(rule))
+    }
 
     @ValidatorRulesDsl
     infix fun <R> KProperty1<T, R?>.always(rule: AlwaysPremierRule): AlwaysRuleBuilder<R>
@@ -54,7 +72,15 @@ interface ValidatorRules<T>: BuiltinRules {
     }
 
     @ValidatorRulesDsl
-    infix fun <E, R : Collection<E?>> KProperty1<T, R?>.each(rule: Rule<E>): RuleBuilder<R> {
-        return this.always(Skipped()).and(Each(rule))
+    infix fun <R> KProperty1<T, R?>.whether(rule: WhetherPremierRule): WhetherRuleBuilder<R>
+
+    @ValidatorRulesDsl
+    infix fun <R: Any> KProperty1<T, R?>.optional(block: RuleBuilder<R>.() -> Unit): RuleBuilder<R> {
+        return this.whether(Skipped()).apply(block)
+    }
+
+    @ValidatorRulesDsl
+    infix fun <R: Any> KProperty1<T, R?>.optional(rule: Rule<R>): WhetherRuleBuilder<R> {
+        return this.whether(Skipped()).or(rule)
     }
 }
